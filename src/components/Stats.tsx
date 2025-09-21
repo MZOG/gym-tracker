@@ -1,11 +1,21 @@
 import getWorkoutsCount from "@/queries/getWorkoutsCount";
+import getWorkoutsEvents from "@/queries/getWorkoutsEvents";
+import WorkoutsEvents from "./WorkoutsEvents";
 
 const Stats = async () => {
+  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const totalWorkouts = await getWorkoutsCount();
+  const workoutsEvents = await getWorkoutsEvents({
+    page: 1,
+    pageSize: 5,
+    since: since,
+  });
 
   if (!totalWorkouts) {
     return <p>Błąd pobierania</p>;
   }
+
+  console.log(workoutsEvents);
 
   const { workout_count } = totalWorkouts;
 
@@ -15,6 +25,7 @@ const Stats = async () => {
 
       <div>
         <p>Wszystkie treningi: {workout_count}</p>
+        <WorkoutsEvents initialWorkouts={workoutsEvents} />
       </div>
     </div>
   );

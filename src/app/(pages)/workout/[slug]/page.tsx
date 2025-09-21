@@ -21,8 +21,6 @@ const WorkoutPage = async ({
 
   const { title, start_time, end_time, exercises } = data;
 
-  console.log(exercises);
-
   // calculate time
   const workoutTime = (time: string) => {
     const date = new Date(time);
@@ -51,7 +49,7 @@ const WorkoutPage = async ({
       warmups: 0,
       normals: 0,
       totalKg: 0,
-    },
+    }
   );
 
   return (
