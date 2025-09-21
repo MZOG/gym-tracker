@@ -64,7 +64,7 @@ const WorkoutPage = async ({
         <p>KG: {totals.totalKg}kg</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
         {exercises.map((exercise) => {
           return <ExerciseChart key={exercise.index} exercise={exercise} />;
         })}

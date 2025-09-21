@@ -34,19 +34,27 @@ export default function ExerciseChart({ exercise }: Props) {
   }));
 
   return (
-    <div className="mt-5 bg-gray-50 border border-gray-100 rounded-lg p-3">
+    <div className=" bg-gray-50 border border-gray-100 rounded-lg p-3">
       <p className="font-semibold">
         {exercise.index + 1}. {exercise.title}
       </p>
       {exercise.notes && <p className="text-sm">{exercise.notes}</p>}
 
-      <div className="mt-2 space-y-2">
+      <div className="mt-2 space-y-1">
         {exercise.sets.map((set) => (
           <p
             key={set.index}
-            className={`${set.type === "warmup" && "bg-yellow-100 border-yellow-200 border"} ${set.type === "dropset" && "bg-blue-100 border border-blue-200"} p-1 pl-2 rounded-md relative`}
+            className={`${
+              set.type === "warmup" &&
+              "bg-orange-100 border-orange-200 border opacity-60"
+            } ${
+              set.type === "dropset" && "bg-blue-100 border border-blue-200"
+            } ${
+              set.type === "failure" && "bg-red-100 border border-red-200"
+            } p-1 pl-2 rounded-md relative text-sm`}
           >
-            {set.index + 1}. {set.weight_kg}kg × {set.reps}
+            {set.index + 1}. {set.weight_kg}kg × {set.reps}{" "}
+            {set.rpe && `@ ${set.rpe} rpe`}
             {set.type === "warmup" && (
               <span className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xs font-medium text-yellow-600">
                 rozgrzewka
@@ -60,6 +68,11 @@ export default function ExerciseChart({ exercise }: Props) {
             {set.type === "normal" && (
               <span className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xs font-medium text-primary">
                 robocza
+              </span>
+            )}
+            {set.type === "failure" && (
+              <span className="absolute top-1/2 right-2 transform -translate-y-1/2 text-xs font-medium text-primary text-rose-900">
+                niepowodzenie
               </span>
             )}
           </p>
@@ -80,7 +93,7 @@ export default function ExerciseChart({ exercise }: Props) {
               stroke="#8884d8"
               fill="#8884d8"
               fillOpacity={0.1}
-              name="KG"
+              name="kg"
             />
             <Area
               type="monotone"
@@ -88,7 +101,7 @@ export default function ExerciseChart({ exercise }: Props) {
               stroke="#82ca9d"
               fill="#82ca9d"
               fillOpacity={0.3}
-              name="Powtórzenia"
+              name="powtórzenia"
             />
           </AreaChart>
         </ResponsiveContainer>
